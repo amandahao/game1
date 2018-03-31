@@ -16,7 +16,7 @@ var server = http.createServer(app);
 /* Defines what port to use to listen to web requests */
 var port =  process.env.PORT
 				? parseInt(process.env.PORT)
-				: 8080; 
+				: 8080;
 
 
 /* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
@@ -24,6 +24,30 @@ app.get('/form', (req, res, next) => {
 
 	/* Get the absolute path of the html file */
 	var filePath = path.join(__dirname, './index.html')
+
+	/* Sends the html file back to the browser */
+	res.sendFile(filePath);
+	//res.send('whatever')
+	//res.status(404)
+});
+
+/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+app.get('/', (req, res, next) => {
+
+	/* Get the absolute path of the html file */
+	var filePath = path.join(__dirname, './home.html')
+
+	/* Sends the html file back to the browser */
+	res.sendFile(filePath);
+	//res.send('whatever')
+	//res.status(404)
+});
+
+/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+app.get('/home.css', (req, res, next) => {
+
+	/* Get the absolute path of the html file */
+	var filePath = path.join(__dirname, './home.css')
 
 	/* Sends the html file back to the browser */
 	res.sendFile(filePath);
