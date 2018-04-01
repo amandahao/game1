@@ -7,8 +7,8 @@
 		<div>
 			<b><label>PM or LO?</label></b>
       <div>
-  			<label>PM<input type='radio' name='PM'></label><label>LO<input type='radio' name='LO'></label>
-  			<button>SUBMIT</button>
+  			<label>PM<input type='radio' name='leader' answer='PM'></label>
+        <label>LO<input type='radio' name='leader' answer='LO'></label>
       </div>
 	  </div>
 
@@ -17,8 +17,8 @@
     <div>
 			<b><label>MG or MO?</label></b>
       <div>
-  			<label>PM<input type='radio' name='MG'></label><label>PM<input type='radio' name='MO'></label>
-  			<button>SUBMIT</button>
+  			<label>MG<input type='radio' name='member' answer='MG'></label>
+        <label>MO<input type='radio' name='member' answer='MO'></label>
       </div>
 	  </div>
 
@@ -27,9 +27,44 @@
     <div>
 			<b><label>Death or Life?</label></b>
       <div>
-        <label>Death<input type='radio' name='Death'></label><label>Life<input type='radio' name='Life'></label>
-  			<button>SUBMIT</button>
+        <label>Death<input type='radio' name='choice' answer='death'></label>
+        <label>Life<input type='radio' name='choice' answer='life'></label>
       </div>
 	  </div>
+    <button>SUBMIT</button>
   </body>
+  <script>
+    function storeData() {
+    	var $inputs = document.querySelectorAll('input');
+    	var data = {};
+
+    	for(var i = 0; i < $inputs.length; i++) {
+    		var $input = $inputs[i];
+    		var name = $input.name;
+    		var value = $input.value; // or .checked
+
+        if($input.type === 'text' || $input.type === 'password') {
+          data[$input.name] = $input.value;
+        }
+        else if ($input.type === 'checkbox') {
+          data[$input.name] = $input.checked;
+        }
+        else if ($input.type === 'radio' && $input.checked) {
+          data[$input.name] = $input.getAttribute('answer');
+        }
+    	}
+    	sendData(data);
+    }
+
+    function sendData(data) {
+    	var req = new XMLHttpRequest();
+
+    	req.open('POST', '/form', true);
+    	req.setRequestHeader('content-type', 'application/json')
+    	req.send(JSON.stringify(data));
+    }
+
+    var $button = document.querySelector('button')
+    $button.addEventListener('click', storeData)
+  </script>
 </html>
