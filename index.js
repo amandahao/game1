@@ -68,6 +68,42 @@ function startServer() {
 		//res.status(404)
 	});
 
+	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+	app.get('/survey', (req, res, next) => {
+
+		/* Get the absolute path of the html file */
+		var filePath = path.join(__dirname, './survey.html')
+
+		/* Sends the html file back to the browser */
+		res.sendFile(filePath);
+		//res.send('whatever')
+		//res.status(404)
+	});
+
+	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+	app.get('/survey.css', (req, res, next) => {
+
+		/* Get the absolute path of the html file */
+		var filePath = path.join(__dirname, './survey.css')
+
+		/* Sends the html file back to the browser */
+		res.sendFile(filePath);
+		//res.send('whatever')
+		//res.status(404)
+	});
+
+	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+	app.get('/survey.js', (req, res, next) => {
+
+		/* Get the absolute path of the html file */
+		var filePath = path.join(__dirname, './survey.js')
+
+		/* Sends the html file back to the browser */
+		res.sendFile(filePath);
+		//res.send('whatever')
+		//res.status(404)
+	});
+
 	app.get('/breakfast', (req, res, next) => {
 		res.send('<img src="https://images.unsplash.com/photo-1455853828816-0c301a011711?ixlib=rb-0.3.5&s=f087ed54c63956580923b24bfaa07db7&auto=format&fit=crop&w=668&q=80" />')
 	});
