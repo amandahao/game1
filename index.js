@@ -5,7 +5,9 @@ var bodyParser = require('body-parser');
 
 var mongoose = require('mongoose');
 
-var dbAddress = process.env.MONGODB_URI || 'mongodb://127.0.0.1/NAME_OF_GAME';
+var usermodel = require('./user.js').getModel();
+
+var dbAddress = process.env.MONGODB_URI || 'mongodb://127.0.0.1/fullstackgame';
 
 /* The http module is used to listen for requests from a web browser */
 var http = require('http');
@@ -40,8 +42,10 @@ function startServer() {
 	});
 
 	app.post('/form', (req, res, next) => {
-		console.log(req.body);
-		res.send('OK')
+		var newuser = new usermodel(req.body)
+		newuser.save(function(err) {
+			res.send(err || 'OK');
+		})
 	});
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */

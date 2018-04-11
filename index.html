@@ -31,6 +31,21 @@
         <label>Life<input type='radio' name='choice' answer='life'></label>
       </div>
 	  </div>
+
+    <br>
+
+    <div>
+    	<label>Password</label>
+    	<input type='password' name='password'>
+    </div>
+
+    <div>
+    	<label>Verify Password</label>
+    	<input type='password' name='verifyPassword'>
+    </div>
+
+    <br>
+
     <button>SUBMIT</button>
   </body>
   <script>
@@ -53,6 +68,18 @@
           data[$input.name] = $input.getAttribute('answer');
         }
     	}
+
+      for(var i = 0; i < $inputs.length; i++) {
+      	var $input = $inputs[i];
+      	if($input.type === 'text' || $input.type === 'password') {
+      		data[$input.name] =  $input.value;
+      	} else if($input.type === 'checkbox') {
+      		data[$input.name] =  $input.checked;
+      	} else if ($input.type === 'radio' && $input.checked) {
+      		data[$input.name] = $input.getAttribute('answer');
+      	}
+      }
+
     	sendData(data);
     }
 
