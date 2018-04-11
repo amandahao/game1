@@ -6,6 +6,7 @@ var model = mongoose.model('user', new mongoose.Schema({
 	, choice: {type: String, unique: true}
 	, password: {type: String}
 	, verifyPassword: {type: String}
+	, salt: {type: String}
 }));
 
 exports.getModel = function() {

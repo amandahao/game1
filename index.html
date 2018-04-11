@@ -4,11 +4,17 @@
     <title>Game 1</title>
   </head>
 	<body>
+
+    <div>
+      <label>Username</label>
+      <input type='text' name='username'>
+    </div>
+
 		<div>
 			<b><label>PM or LO?</label></b>
       <div>
-  			<label>PM<input type='radio' name='leader' answer='PM'></label>
-        <label>LO<input type='radio' name='leader' answer='LO'></label>
+  			<label>PM</label><input type='radio' name='leader' answer='PM'>
+        <label>LO</label><input type='radio' name='leader' answer='LO'>
       </div>
 	  </div>
 
@@ -17,8 +23,8 @@
     <div>
 			<b><label>MG or MO?</label></b>
       <div>
-  			<label>MG<input type='radio' name='member' answer='MG'></label>
-        <label>MO<input type='radio' name='member' answer='MO'></label>
+  			<label>MG</label><input type='radio' name='member' answer='MG'>
+        <label>MO</label><input type='radio' name='member' answer='MO'>
       </div>
 	  </div>
 
@@ -27,8 +33,8 @@
     <div>
 			<b><label>Death or Life?</label></b>
       <div>
-        <label>Death<input type='radio' name='choice' answer='death'></label>
-        <label>Life<input type='radio' name='choice' answer='life'></label>
+        <label>Death</label><input type='radio' name='choice' answer='death'>
+        <label>Life</label><input type='radio' name='choice' answer='life'>
       </div>
 	  </div>
 
@@ -49,7 +55,19 @@
     <button>SUBMIT</button>
   </body>
   <script>
+    function verifyPassword() {
+      var $passwords = document.querySelectorAll('input[type="password"]');
+      var isSamePassword = $passwords[0].value === $passwords[1].value;
+      if(!isSamePassword) {
+        alert("Please enter the same password!")
+      }
+      return isSamePassword;
+    }
+
     function storeData() {
+      // Sending the data only if the passwords match
+      if(!verifyPassword()) return;
+      var data = {};
     	var $inputs = document.querySelectorAll('input');
     	var data = {};
 
@@ -84,11 +102,29 @@
     }
 
     function sendData(data) {
-    	var req = new XMLHttpRequest();
+      // Creating a new request to the server that contains the data
+      var req = new XMLHttpRequest();
 
-    	req.open('POST', '/form', true);
-    	req.setRequestHeader('content-type', 'application/json')
-    	req.send(JSON.stringify(data));
+      // Opening up a connection with the server to 'POST' data
+      req.open('POST', '/form', true);
+
+      // Explain to the server that we are sending the data in json format
+      req.setRequestHeader('content-type', 'application/json');
+
+      // Alert the user to any errors from the server
+      function readyStateChange() {
+      	if(req.readyState !== 4) return;
+      	if(req.status !== 200) return;
+
+      	data = JSON.parse(req.responseText);
+      	if(data.error) {
+      		alert(data.error);
+      	}
+      }
+      req.onreadystatechange = readyStateChange;
+
+      // Sending the data in JSON format
+      req.send(JSON.stringify(data));
     }
 
     var $button = document.querySelector('button')
