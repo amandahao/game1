@@ -39,22 +39,8 @@
       <script defer src="https://use.fontawesome.com/releases/v5.0.10/js/all.js" integrity="sha384-slN8GvtUJGnv6ca26v8EzVaR9DC58QEwsIk9q1QXdCU8Yu8ck/tL/5szYlBbqmS+" crossorigin="anonymous"></script>
       -->
       <script>
-        function verifyPassword() {
-          var $passwords = document.querySelectorAll('input[type="password"]');
-          var isSamePassword = $passwords[0].value === $passwords[1].value;
-          if(!isSamePassword) {
-            alert("Please enter the same password!")
-          }
-          return isSamePassword;
-        }
 
         function storeData() {
-          // Sending the data only if the passwords match
-          if(!verifyPassword()) return;
-          var data = {};
-        	var $inputs = document.querySelectorAll('input');
-        	var data = {};
-
         	for(var i = 0; i < $inputs.length; i++) {
         		var $input = $inputs[i];
         		var name = $input.name;
