@@ -47,12 +47,12 @@ function addSockets() {
 }
 
 function startServer() {
-	function authenticateUser(username, password, callback) {
+	function verifyUser(username, password, callback) {
 		if(!username) return callback('No username given');
 		if(!password) return callback('No password given');
-		usermodel.findOne({userName: username}, (err, user) => {
+		usermodel.findOne({username: username}, (err, user) => {
 			if(err) return callback('Error connecting to database');
-			if(!user) return callback('Incorrect username');
+			if(!user) return callback('No user found');
 			crypto.pbkdf2(password, user.salt, 10000, 256, 'sha256', (err, resp) => {
 				if(err) return callback('Error handling password');
 				if(resp.toString('base64') === user.password) return callback(null);
@@ -218,12 +218,11 @@ function startServer() {
 	});
 
 	app.post('/login', (req, res, next) => {
-		var username = req.body.userName;
+		var username = req.body.username;
 		var password = req.body.password;
-
-		authenticateUser(username, password, (err) => {
-			res.send({error: err});
-		});
+		verifyUser(username, password, (error) => {
+			res.send({error: error});
+		})
 	});
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
