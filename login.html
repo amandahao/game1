@@ -90,7 +90,7 @@
 
           	data = JSON.parse(req.responseText);
           	if(data.error) {
-          		alert(data.error);
+          		return alert(data.error);
           	}
             window.location.href = "/game";
           }
