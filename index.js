@@ -47,6 +47,9 @@ function addSockets() {
 }
 
 function startServer() {
+
+	addSockets();
+
 	function verifyUser(username, password, callback) {
 		if(!username) return callback('No username given');
 		if(!password) return callback('No password given');
