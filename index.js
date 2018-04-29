@@ -115,6 +115,18 @@ function startServer() {
 	});
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
+	app.get('/test.css', (req, res, next) => {
+
+		/* Get the absolute path of the html file */
+		var filePath = path.join(__dirname, './test.css')
+
+		/* Sends the html file back to the browser */
+		res.sendFile(filePath);
+		//res.send('whatever')
+		//res.status(404)
+	});
+
+	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
 	app.get('/', (req, res, next) => {
 
 		/* Get the absolute path of the html file */
