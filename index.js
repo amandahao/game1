@@ -269,8 +269,6 @@ function startServer() {
 		//res.status(404)
 	});
 
-	addSockets();
-
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
 	app.get('/game.css', (req, res, next) => {
 
