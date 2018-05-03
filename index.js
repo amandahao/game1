@@ -79,7 +79,7 @@ function startServer() {
 	app.use(passport.session());
 
 	passport.use(new LocalStrategy({
-		usernameField: 'userName'
+		usernameField: 'username'
 		, passwordField: 'password'
 	}, verifyUser));
 
@@ -275,12 +275,6 @@ function startServer() {
 				return res.send({error: null});
 			});
 		})(req, res, next)
-
-		var username = req.body.username;
-		var password = req.body.password;
-		verifyUser(username, password, (error) => {
-			res.send({error: error});
-		})
 	});
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
