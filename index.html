@@ -168,12 +168,18 @@
         	if(data.error) {
         		alert(data.error);
         	}
-          window.location.href = "/login";
+          window.location.href = "/game";
         }
         req.onreadystatechange = readyStateChange;
 
         // Sending the data in JSON format
         req.send(JSON.stringify(data));
+      }
+
+      function submit() {
+      	var formData = storeData();
+      	if(!formData.picture) return alert('Please upload a picture');
+      	sendData(formData);
       }
 
       var $button = document.querySelector('button')

@@ -274,8 +274,8 @@ function startServer() {
 		passport.authenticate('local', function(err, user) {
 			if(err) return res.send({error: err});
 			req.logIn(user, (err) => {
-				if (err) return res.send({error: err});
-				return res.send({error: null});
+				if(err) return res.send({error: err});
+				res.send({error: null});
 			});
 		})(req, res, next)
 	});
