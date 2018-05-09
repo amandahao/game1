@@ -2,7 +2,7 @@
 <html lang="en" >
   <head>
     <meta charset="UTF-8">
-    <title>Form</title>
+    <title>Sign Up!</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap-reboot.min.css'>
     <link rel="stylesheet" href="/test.css">
@@ -52,34 +52,6 @@
           <label class="form-element-label" for="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9">Username</label>
         </div>
 
-        <div class="form-radio form-radio-block">
-          <div class="form-radio-legend">PM or LO?</div>
-          <label class="form-radio-label">
-            <input name="leader" class="form-radio-field" type="radio" value="PM" />
-            <i class="form-radio-button"></i>
-            <span>PM</span>
-          </label>
-          <label class="form-radio-label">
-            <input name="leader" class="form-radio-field" type="radio" value="LO" />
-            <i class="form-radio-button"></i>
-            <span>LO</span>
-          </label>
-        </div>
-
-        <div class="form-radio form-radio-block">
-          <div class="form-radio-legend">MG or MO?</div>
-          <label class="form-radio-label">
-            <input name="member" class="form-radio-field" type="radio" value="MG" />
-            <i class="form-radio-button"></i>
-            <span>MG</span>
-          </label>
-          <label class="form-radio-label">
-            <input name="member" class="form-radio-field" type="radio" value="MO" />
-            <i class="form-radio-button"></i>
-            <span>MO</span>
-          </label>
-        </div>
-
         <div class="form-element form-input">
           <input id="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9" class="form-element-field" placeholder="Please put your password" type="password" name="password" required/>
           <div class="form-element-bar"></div>
@@ -92,12 +64,22 @@
           <label class="form-element-label" for="field-omv6eo-metm0n-5j55wv-w3wbws-6nm2b9">Verify Password</label>
         </div>
 
+        <div>
+          <label>Avatar:</label>
+          <input type="file" accept="image/*" name="avatar">
+          <div id = "avatar"></div>
+        </div>
+
         <button class="btn2">SUBMIT</button>
 
       </fieldset>
     </form>
 
     <script>
+      var imageData;
+      var $character = document.querySelector(input[name=avatar]);
+      var $preview = document.querySelector('#avatar');
+
       function verifyPassword() {
         var $passwords = document.querySelectorAll('input[type="password"]');
         var isSamePassword = $passwords[0].value === $passwords[1].value;
@@ -138,7 +120,9 @@
         		data[$input.name] =  $input.checked;
         	} else if ($input.type === 'radio' && $input.checked) {
         		data[$input.name] = $input.getAttribute('answer');
-        	}
+        	} else if ($input.type === 'file') {
+            data[$input.name] =  imageData;
+          }
         }
 
       	sendData(data);

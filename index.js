@@ -15,6 +15,8 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var session = require('express-session');
 
+var fs = require('fs');
+
 var crypto = require('crypto');
 
 var dbAddress = process.env.MONGODB_URI || 'mongodb://127.0.0.1/fullstackgame';
@@ -41,9 +43,10 @@ var port =  process.env.PORT
 
 function addSockets() {
 	io.on('connection', (socket) => {
-		io.emit("new message", 'user connected');
+		var user = socket.handshake.query.user;
+		io.emit("new message", {username: user, message: "connected to chat"});
 		socket.on('disconnect', () => {
-			io.emit("new message", 'user disconnected');
+			io.emit("new message", {username: user, message: "disconnected from chat"});
 		});
 
 		socket.on('message', (message) => {
@@ -94,7 +97,7 @@ function startServer() {
 	});
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
-	app.get('/form', (req, res, next) => {
+	app.get('/signup', (req, res, next) => {
 
 		/* Get the absolute path of the html file */
 		var filePath = path.join(__dirname, './index.html')
@@ -105,7 +108,7 @@ function startServer() {
 		//res.status(404)
 	});
 
-	app.post('/form', (req, res, next) => {
+	app.post('/signup', (req, res, next) => {
 
 		// Converting the request in an user object
 		var newuser = new usermodel(req.body);
@@ -309,13 +312,12 @@ function startServer() {
 
 	/* Defines what function to call when a request comes from the path '/' in http://localhost:8080 */
 	app.get('/game', (req, res, next) => {
-		if(!req.user) res.redirect('/login');
-
-		/* Get the absolute path of the html file */
-		var filePath = path.join(__dirname, './game.html')
-
-		/* Sends the html file back to the browser */
-		res.sendFile(filePath);
+		if(!req.user) return res.redirect('/login');
+		var filePath = path.join(__dirname, './game.html');
+		var fileContents = fs.readFileSync(filePath, 'utf8');
+		fileContents = fileContents.replace('{{USERNAME}}', req.user.username);
+		res.send(fileContents);
+		//res.sendFile(filePath);
 		//res.send('whatever')
 		//res.status(404)
 	});
