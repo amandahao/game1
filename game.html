@@ -79,6 +79,7 @@
 		<script src="./game.js"></script>
 		<script src="/js/socket.io.js"></script>
 		<script>
+			var user = {{USERNAME}}
 			var socket = io();
 			socket.on('new message', function(message) {
 				var $ul = document.querySelector('#chat ul');
