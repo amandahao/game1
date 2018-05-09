@@ -40,6 +40,11 @@
         -o-transition: all 0.2s linear;
         transition: all 0.2s linear;
       }
+
+      #avatar img {
+      	width: 30vmax;
+      	height: 30vmax;
+      }
     </style>
   </head>
   <body>
@@ -77,8 +82,21 @@
 
     <script>
       var imageData;
-      var $character = document.querySelector(input[name=avatar]);
+      var $character = document.querySelector('input[name=avatar]');
       var $preview = document.querySelector('#avatar');
+      $character.addEventListener('change', grabAvatar);
+
+      function grabAvatar() {
+      	var fileReader = new FileReader();
+      	fileReader.onload = function(e) {
+      		var $img = document.createElement('img');
+      		imageData = e.target.result;
+          $img.src = imageData;
+      		$preview.innerHTML = '';
+      		$preview.appendChild($img);
+      	}
+      	fileReader.readAsDataURL($character.files[0]);
+      }
 
       function verifyPassword() {
         var $passwords = document.querySelectorAll('input[type="password"]');
